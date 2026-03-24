@@ -1,0 +1,47 @@
+{
+  "name": "stack-sticky",
+  "type": "module",
+  "version": "1.0.0",
+  "packageManager": "pnpm@10.32.1",
+  "description": "Auto-stack sticky elements across nested scroll contexts",
+  "license": "MIT",
+  "keywords": [
+    "sticky",
+    "position-sticky",
+    "scroll",
+    "ui"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/stack-sticky.es.js",
+      "require": "./dist/stack-sticky.cjs.js",
+      "default": "./dist/stack-sticky.es.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/stack-sticky.cjs.js",
+  "module": "./dist/stack-sticky.es.js",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:demo": "vite build --config vite.demo.config.ts",
+    "preview": "vite preview --config vite.demo.config.ts",
+    "lint": "eslint .",
+    "check": "tsc --noEmit",
+    "version": "auto-changelog-plus -p && git add CHANGELOG.md"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^7.7.3",
+    "@types/node": "^25.5.0",
+    "auto-changelog-plus": "^1.2.3",
+    "eslint": "^10.0.3",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.2",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}
