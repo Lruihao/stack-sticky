@@ -4,7 +4,16 @@
   "version": "1.0.0",
   "packageManager": "pnpm@10.32.1",
   "description": "Auto-stack sticky elements across nested scroll contexts",
+  "author": "Lruihao (https://lruihao.cn)",
   "license": "MIT",
+  "homepage": "https://github.com/Lruihao/stack-sticky#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lruihao/stack-sticky.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lruihao/stack-sticky/issues"
+  },
   "keywords": [
     "sticky",
     "position-sticky",
