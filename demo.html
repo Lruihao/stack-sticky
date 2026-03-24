@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>stackSticky Vanilla JS Demo</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 24px;
+      background: linear-gradient(160deg, #f6f9ff 0%, #f3fff8 100%);
+      color: #1f2937;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar button {
+      border: none;
+      background: #0f766e;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .toolbar button:hover {
+      background: #0d5f59;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .panel {
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      background: #ffffff;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 12px 14px;
+      border-bottom: 1px solid #edf2f7;
+      background: #f8fafc;
+    }
+
+    .stack-root {
+      height: 360px;
+      overflow-y: auto;
+      position: relative;
+      background: #fff;
+    }
+
+    .sticky-top {
+      position: sticky;
+      padding: 12px 14px;
+      font-weight: bold;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      z-index: 10;
+    }
+
+    .stack-root > .sticky-top {
+      z-index: 30;
+    }
+
+    .inner-scroll .sticky-top {
+      z-index: 20;
+    }
+
+    .header-1 { background-color: #ffebee; color: #b91c1c; }
+    .header-2 { background-color: #e8f5e9; color: #166534; }
+    .header-3 { background-color: #e3f2fd; color: #1d4ed8; }
+    .header-4 { background-color: #fff7ed; color: #c2410c; }
+    .header-5 { background-color: #f3e8ff; color: #7e22ce; }
+
+    .content-block {
+      padding: 14px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .placeholder {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f5f5f5;
+      margin-top: 10px;
+      border: 1px dashed #bbb;
+      color: #999;
+      border-radius: 8px;
+    }
+
+    .inner-scroll {
+      margin-top: 10px;
+      height: 220px;
+      overflow-y: auto;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .inner-scroll .content-block {
+      background: #fff;
+    }
+
+    @media (max-width: 1024px) {
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>stackSticky 原生 JS 演示</h2>
+  <p>这个页面包含多个滚动区和一个嵌套滚动区。分别滚动每个区域，观察 sticky 标题如何按顺序堆叠。</p>
+
+  <div class="toolbar">
+    <span>提示：当你动态增删内容后，可点击重新计算。</span>
+  </div>
+
+  <div class="demo-grid">
+    <section class="panel">
+      <h3 class="panel-title">滚动区 A：基础堆叠</h3>
+      <div class="stack-root" id="scroll-root-a">
+        <div class="sticky-top header-1">A / Sticky Header 1</div>
+        <div class="content-block">
+          <p>基础场景，线性内容。</p>
+          <div class="placeholder">A-Content 1</div>
+        </div>
+
+        <div class="sticky-top header-2">A / Sticky Header 2</div>
+        <div class="content-block">
+          <p>继续滚动，Header 2 会叠在 Header 1 下方。</p>
+          <div class="placeholder">A-Content 2</div>
+        </div>
+
+        <div class="sticky-top header-3">A / Sticky Header 3</div>
+        <div class="content-block">
+          <p>第三层堆叠效果。</p>
+          <div class="placeholder">A-Content 3</div>
+        </div>
+
+        <div class="sticky-top header-4">A / Sticky Header 4</div>
+        <div class="content-block">
+          <div class="placeholder">A-Content 4</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h3 class="panel-title">滚动区 B：含嵌套滚动区</h3>
+      <div class="stack-root" id="scroll-root-b">
+        <div class="sticky-top header-1">B / Outer Header 1</div>
+        <div class="content-block">
+          <p>外层滚动先出现一层 sticky，然后进入内层滚动测试。</p>
+          <div class="placeholder">B-Outer Content</div>
+
+          <div class="inner-scroll">
+            <div class="sticky-top header-3">B / Inner Header 1</div>
+            <div class="content-block">
+              <div class="placeholder">B-Inner Content 1</div>
+            </div>
+
+            <div class="sticky-top header-4">B / Inner Header 2</div>
+            <div class="content-block">
+              <div class="placeholder">B-Inner Content 2</div>
+            </div>
+
+            <div class="sticky-top header-5">B / Inner Header 3</div>
+            <div class="content-block">
+              <div class="placeholder">B-Inner Content 3</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sticky-top header-2">B / Outer Header 2</div>
+        <div class="content-block">
+          <div class="placeholder">B-Outer Content</div>
+          <div class="placeholder">B-Outer Tail</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h3 class="panel-title">滚动区 C：更长内容链</h3>
+      <div class="stack-root" id="scroll-root-c">
+        <div class="sticky-top header-5">C / Sticky Header 1</div>
+        <div class="content-block"><div class="placeholder">C-Content 1</div></div>
+
+        <div class="sticky-top header-1">C / Sticky Header 2</div>
+        <div class="content-block"><div class="placeholder">C-Content 2</div></div>
+
+        <div class="sticky-top header-2">C / Sticky Header 3</div>
+        <div class="content-block"><div class="placeholder">C-Content 3</div></div>
+
+        <div class="sticky-top header-3">C / Sticky Header 4</div>
+        <div class="content-block"><div class="placeholder">C-Content 4</div></div>
+
+        <div class="sticky-top header-4">C / Sticky Header 5</div>
+        <div class="content-block"><div class="placeholder">C-Content 5</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./stack-sticky.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    stackSticky()
+  });
+</script>
+
+</body>
+</html>
