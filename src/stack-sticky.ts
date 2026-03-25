@@ -98,7 +98,8 @@ export interface StackStickyOptions {
 }
 
 function getStickySize(element: HTMLElement, type: StickyDirection): number {
-  return type === 'left' || type === 'right' ? element.offsetWidth : element.offsetHeight
+  const rect = element.getBoundingClientRect()
+  return type === 'left' || type === 'right' ? rect.width : rect.height
 }
 
 export function stackSticky({
@@ -167,7 +168,7 @@ export function stackSticky({
 
     if (lastElement) {
       const lastElementStyle = window.getComputedStyle(lastElement)
-      const lastTypeVal = Number.parseInt(lastElementStyle[type], 10) || 0
+      const lastTypeVal = Number.parseFloat(lastElementStyle[type]) || 0
       element.style[type] = `${lastTypeVal + getStickySize(lastElement, type) + offset}px`
     }
   })

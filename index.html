@@ -61,6 +61,7 @@
       background: #fff;
     }
 
+    .sticky-bottom,
     .sticky-top {
       position: sticky;
       padding: 12px 14px;
@@ -123,6 +124,7 @@
     .inner-demo-group {
       display: grid;
       gap: 12px;
+      margin-top: 12px;
     }
 
     .inner-demo-label {
@@ -132,7 +134,6 @@
       color: #374151;
     }
 
-    .sticky-bottom,
     .sticky-left,
     .sticky-right {
       position: sticky;
@@ -269,22 +270,21 @@
 
             <p class="inner-demo-label">Inner bottom stacking</p>
             <div class="inner-scroll inner-scroll-bottom">
-              <div class="content-block">
-                <p>Scroll to the end and bottom sticky items will stack upward.</p>
-                <div class="placeholder">B-Bottom Content 1</div>
-              </div>
-
+              <div class="placeholder">Scroll to the end and bottom sticky items will stack upward</div>
               <div class="sticky-bottom header-2">B / Bottom Sticky 1</div>
               <div class="content-block">
-                <div class="placeholder">B-Bottom Content 2</div>
+                <div class="placeholder">B-Bottom Content 1</div>
               </div>
 
               <div class="sticky-bottom header-4">B / Bottom Sticky 2</div>
               <div class="content-block">
-                <div class="placeholder">B-Bottom Content 3</div>
+                <div class="placeholder">B-Bottom Content 2</div>
               </div>
 
               <div class="sticky-bottom header-5">B / Bottom Sticky 3</div>
+              <div class="content-block">
+                <div class="placeholder">B-Bottom Content 3</div>
+              </div>
             </div>
 
             <p class="inner-demo-label">Inner left stacking</p>
