@@ -77,6 +77,12 @@
       z-index: 20;
     }
 
+    .inner-scroll .sticky-bottom,
+    .inner-scroll .sticky-left,
+    .inner-scroll .sticky-right {
+      z-index: 20;
+    }
+
     .header-1 { background-color: #ffebee; color: #b91c1c; }
     .header-2 { background-color: #e8f5e9; color: #166534; }
     .header-3 { background-color: #e3f2fd; color: #1d4ed8; }
@@ -112,6 +118,80 @@
 
     .inner-scroll .content-block {
       background: #fff;
+    }
+
+    .inner-demo-group {
+      display: grid;
+      gap: 12px;
+    }
+
+    .inner-demo-label {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    .sticky-bottom,
+    .sticky-left,
+    .sticky-right {
+      position: sticky;
+      padding: 12px 8px;
+      font-weight: bold;
+      z-index: 10;
+    }
+
+    .sticky-bottom {
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .sticky-left,
+    .sticky-right {
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid rgba(0, 0, 0, 0.08);
+      white-space: nowrap;
+    }
+
+    .sticky-right {
+      border-right: 0;
+      border-left: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .inner-scroll-bottom {
+      height: 180px;
+    }
+
+    .inner-scroll-bottom .content-block {
+      min-height: 120px;
+    }
+
+    .inner-scroll-horizontal {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: max-content;
+      align-items: stretch;
+      overflow-x: auto;
+      overflow-y: hidden;
+      height: 180px;
+      padding-bottom: 0;
+    }
+
+    .horizontal-card {
+      width: 240px;
+      padding: 16px;
+      border-right: 1px solid #e5e7eb;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(241, 245, 249, 0.95));
+      color: #475569;
+      line-height: 1.6;
+    }
+
+    .horizontal-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #1f2937;
     }
 
     @media (max-width: 1024px) {
@@ -168,20 +248,81 @@
           <p>Outer sticky appears first, then nested scrolling starts.</p>
           <div class="placeholder">B-Outer Content</div>
 
-          <div class="inner-scroll">
-            <div class="sticky-top header-3">B / Inner Header 1</div>
-            <div class="content-block">
-              <div class="placeholder">B-Inner Content 1</div>
+          <div class="inner-demo-group">
+            <p class="inner-demo-label">Inner top stacking</p>
+            <div class="inner-scroll">
+              <div class="sticky-top header-3">B / Inner Header 1</div>
+              <div class="content-block">
+                <div class="placeholder">B-Inner Content 1</div>
+              </div>
+
+              <div class="sticky-top header-4">B / Inner Header 2</div>
+              <div class="content-block">
+                <div class="placeholder">B-Inner Content 2</div>
+              </div>
+
+              <div class="sticky-top header-5">B / Inner Header 3</div>
+              <div class="content-block">
+                <div class="placeholder">B-Inner Content 3</div>
+              </div>
             </div>
 
-            <div class="sticky-top header-4">B / Inner Header 2</div>
-            <div class="content-block">
-              <div class="placeholder">B-Inner Content 2</div>
+            <p class="inner-demo-label">Inner bottom stacking</p>
+            <div class="inner-scroll inner-scroll-bottom">
+              <div class="content-block">
+                <p>Scroll to the end and bottom sticky items will stack upward.</p>
+                <div class="placeholder">B-Bottom Content 1</div>
+              </div>
+
+              <div class="sticky-bottom header-2">B / Bottom Sticky 1</div>
+              <div class="content-block">
+                <div class="placeholder">B-Bottom Content 2</div>
+              </div>
+
+              <div class="sticky-bottom header-4">B / Bottom Sticky 2</div>
+              <div class="content-block">
+                <div class="placeholder">B-Bottom Content 3</div>
+              </div>
+
+              <div class="sticky-bottom header-5">B / Bottom Sticky 3</div>
             </div>
 
-            <div class="sticky-top header-5">B / Inner Header 3</div>
-            <div class="content-block">
-              <div class="placeholder">B-Inner Content 3</div>
+            <p class="inner-demo-label">Inner left stacking</p>
+            <div class="inner-scroll inner-scroll-horizontal">
+              <div class="sticky-left header-1">B / Left 1</div>
+              <div class="horizontal-card">
+                <strong>Left stack lane A</strong>
+                Horizontal scrolling lets sticky items accumulate from the left edge.
+              </div>
+              <div class="sticky-left header-3">B / Left 2</div>
+              <div class="horizontal-card">
+                <strong>Left stack lane B</strong>
+                Each sticky block reserves width so the next one snaps beside it.
+              </div>
+              <div class="sticky-left header-4">B / Left 3</div>
+              <div class="horizontal-card">
+                <strong>Left stack lane C</strong>
+                Keep scrolling to see the full chain settle in order.
+              </div>
+            </div>
+
+            <p class="inner-demo-label">Inner right stacking</p>
+            <div class="inner-scroll inner-scroll-horizontal">
+              <div class="horizontal-card">
+                <strong>Right stack lane A</strong>
+                These sticky items pin against the right edge while content keeps moving.
+              </div>
+              <div class="sticky-right header-2">B / Right 1</div>
+              <div class="horizontal-card">
+                <strong>Right stack lane B</strong>
+                The library now uses width for horizontal offset accumulation.
+              </div>
+              <div class="sticky-right header-4">B / Right 2</div>
+              <div class="horizontal-card">
+                <strong>Right stack lane C</strong>
+                The last sticky block should align inward from the right edge.
+              </div>
+              <div class="sticky-right header-5">B / Right 3</div>
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'StackSticky',
-      formats: ['es', 'cjs'],
+      formats: ['es', 'umd'],
       fileName: format => `stack-sticky.${format}.js`,
     },
     rollupOptions: {

@@ -82,11 +82,23 @@ function findSameScrollParentElements(root: RootTarget, selector: string, scroll
   return findVisibleElements(root, selector).filter(el => getScrollParent(el) === scrollParent)
 }
 
+function isReverseStackDirection(type: StickyDirection): boolean {
+  return type === 'bottom' || type === 'right'
+}
+
+function orderStickyElements(elements: HTMLElement[], type: StickyDirection): HTMLElement[] {
+  return isReverseStackDirection(type) ? [...elements].reverse() : elements
+}
+
 export interface StackStickyOptions {
   type?: StickyDirection
   root?: RootTarget
   selector?: string
   offset?: number
+}
+
+function getStickySize(element: HTMLElement, type: StickyDirection): number {
+  return type === 'left' || type === 'right' ? element.offsetWidth : element.offsetHeight
 }
 
 export function stackSticky({
@@ -101,10 +113,13 @@ export function stackSticky({
     return
   }
 
-  const stickyElements = findVisibleElements(rootNode, selector).filter((element) => {
-    const computed = window.getComputedStyle(element)
-    return computed[type] === 'auto'
-  })
+  const stickyElements = orderStickyElements(
+    findVisibleElements(rootNode, selector).filter((element) => {
+      const computed = window.getComputedStyle(element)
+      return computed[type] === 'auto'
+    }),
+    type,
+  )
 
   stickyElements.forEach((element) => {
     const scrollParent = getScrollParent(element)
@@ -113,7 +128,10 @@ export function stackSticky({
     let lastElement: HTMLElement | undefined
 
     if (getDistance(element, rootNode) >= getDistance(element, scrollParent)) {
-      sameLevelStickyElements = findSameScrollParentElements(scrollParent, selector, scrollParent)
+      sameLevelStickyElements = orderStickyElements(
+        findSameScrollParentElements(scrollParent, selector, scrollParent),
+        type,
+      )
       index = sameLevelStickyElements.indexOf(element)
 
       if (index === 0) {
@@ -128,7 +146,10 @@ export function stackSticky({
       }
     }
     else {
-      sameLevelStickyElements = findSameScrollParentElements(rootNode, selector, scrollParent)
+      sameLevelStickyElements = orderStickyElements(
+        findSameScrollParentElements(rootNode, selector, scrollParent),
+        type,
+      )
       index = sameLevelStickyElements.indexOf(element)
 
       if (index === 0) {
@@ -147,7 +168,7 @@ export function stackSticky({
     if (lastElement) {
       const lastElementStyle = window.getComputedStyle(lastElement)
       const lastTypeVal = Number.parseInt(lastElementStyle[type], 10) || 0
-      element.style[type] = `${lastTypeVal + lastElement.offsetHeight + offset}px`
+      element.style[type] = `${lastTypeVal + getStickySize(lastElement, type) + offset}px`
     }
   })
 }

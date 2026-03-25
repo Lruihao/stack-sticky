@@ -23,6 +23,10 @@ stackSticky({
 })
 ```
 
+- [Demo](https://lruihao.github.io/stack-sticky/)
+- [Vue2 Demo](https://lruihao.github.io/vue-el-demo/#/stack-sticky)
+- [HTML Demo](https://lruihao.github.io/html-demo/stack-sticky.html)
+
 ## API
 
 ### `stackSticky(options?)`

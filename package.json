@@ -24,12 +24,12 @@
     ".": {
       "types": "./dist/src/index.d.ts",
       "import": "./dist/stack-sticky.es.js",
-      "require": "./dist/stack-sticky.cjs.js",
+      "require": "./dist/stack-sticky.umd.js",
       "default": "./dist/stack-sticky.es.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/stack-sticky.cjs.js",
+  "main": "./dist/stack-sticky.umd.js",
   "module": "./dist/stack-sticky.es.js",
   "types": "./dist/src/index.d.ts",
   "files": [
