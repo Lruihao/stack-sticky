@@ -136,7 +136,7 @@ export function stackSticky({
       index = sameLevelStickyElements.indexOf(element)
 
       if (index === 0) {
-        element.style[type] = '0px'
+        element.style[type] = `${offset}px`
         return
       }
 
@@ -154,6 +154,7 @@ export function stackSticky({
       index = sameLevelStickyElements.indexOf(element)
 
       if (index === 0) {
+        element.style[type] = `${offset}px`
         const lastStickyCandidates = Array.from(
           (scrollParent || document).querySelectorAll('[scroll-last-sticky]'),
         ).filter((el): el is HTMLElement => el instanceof HTMLElement)
@@ -169,7 +170,7 @@ export function stackSticky({
     if (lastElement) {
       const lastElementStyle = window.getComputedStyle(lastElement)
       const lastTypeVal = Number.parseFloat(lastElementStyle[type]) || 0
-      element.style[type] = `${lastTypeVal + getStickySize(lastElement, type) + offset}px`
+      element.style[type] = `${lastTypeVal + getStickySize(lastElement, type)}px`
     }
   })
 }
